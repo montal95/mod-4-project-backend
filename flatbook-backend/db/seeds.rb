@@ -12,7 +12,7 @@ User.destroy_all
 Note.destroy_all
 
 10.times do
-    user = User.create(email: Faker::Internet.email, name: Faker::Name.name)
+    user = User.create(email: Faker::Internet.email, name: Faker::Name.name, password: 'password')
     random_number = rand(6)
     random_number.times do
         Note.create(user: user, title: Faker::Lorem.sentence(word_count: 3), contents: Faker::Lorem.paragraph(sentence_count: 3))
