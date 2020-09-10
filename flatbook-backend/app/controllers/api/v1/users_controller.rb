@@ -1,27 +1,10 @@
 class Api::V1::UsersController < ApplicationController
-    def show
-        @user = User.find(params[:id])
-        render json: {id: @user.id, name: @user.name, email: @user.email}
-    end
-
     def create
-        new_user = Player.create(user_params)
-        render json: {id: new_user.id, name: new_user.name, email: new_user.email}
-    end
-
-    def update
-        user = User.find(params[:id])
-        user.update(user_params)
-        render json: user
-    end
-
-    def destroy
-        user = User.find(params[:id])
-        begin
-            user.destroy
-            render json: {message: 'success', status: 200}
-        rescue
-            render  json: {error: 'unable to delete'}
+    @user = User.create(user_params)
+        if @user.valid?
+            render json: { id: @user.id, email: @user.email }, status: :created
+        else
+            render json: { error: 'failed to create user' }, status: :not_acceptable
         end
     end
 

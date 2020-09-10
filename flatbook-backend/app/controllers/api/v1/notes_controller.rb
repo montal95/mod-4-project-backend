@@ -1,16 +1,8 @@
 class Api::V1::NotesController < ApplicationController
     def index
-        @notes = Note.all
-        options = {
-            include:[:user]
-        }
-        render json: @notes.to_json(
-            include:{
-                user:{
-                    only:%i[name email]
-                }
-            }
-        )
+        id = request.headers[:id]
+        @notes = User.find(id).notes
+        render json: @notes
     end
 
     def show

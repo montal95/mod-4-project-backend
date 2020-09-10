@@ -11,6 +11,10 @@ require 'faker'
 User.destroy_all
 Note.destroy_all
 
+sam = User.create(email: "sammontalvojr@gmail.com", name: "Samuel Montalvo", password: "password")
+Note.create(user: sam, title: "Create login", contents: "Work on making the login next")
+Note.create(user: sam, title: "Create dashboard", contents: "Work on making the dashboard next")
+
 10.times do
     user = User.create(email: Faker::Internet.email, name: Faker::Name.name, password: 'password')
     random_number = rand(6)
