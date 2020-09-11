@@ -17,8 +17,14 @@ class Api::V1::NotesController < ApplicationController
     end
 
     def create
-        note = Note.create(note_params)
-        render json: note
+        user_id = request.headers[:id]
+        user = User.find(user_id)
+        note = user.notes.create(note_params)
+        if note.valid?
+            render json: note
+        else
+            render json: { error: 'failed to create user' }, status: :not_acceptable
+        end
     end
 
     def update
